@@ -31,10 +31,24 @@ except ImportError:
     exit(1)
 
 
+import os
+
+# Функция для загрузки переменных из .env
+def load_env():
+    env_path = os.path.join(os.path.dirname(__file__), '.env')
+    if os.path.exists(env_path):
+        with open(env_path) as f:
+            for line in f:
+                if '=' in line:
+                    key, value = line.strip().split('=', 1)
+                    os.environ[key] = value
+
+load_env()
+
 # ==================== НАСТРОЙКИ ====================
 
-TELEGRAM_BOT_TOKEN = "6813210784:AAFkSDQvZFvTwmhy_O26vfIH7gKs6yimLLc"
-TELEGRAM_CHAT_ID = "814326688"
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 
 # Ollama
